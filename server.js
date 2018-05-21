@@ -5,7 +5,7 @@ var app = express();
 app.use(express.static('public'));
 // Routes
 
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
     res.send("/views/home.html");
 });
 app.get("/about", (req, res) => {
