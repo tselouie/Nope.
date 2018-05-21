@@ -5,11 +5,17 @@ var app = express();
 app.use(express.static('public'));
 // Routes
 
+//response.writeHead(200, {'Content-Type': 'text/html'});
+
+app.get("/", (req, res) => {
+    res.sendFile('views/home.html' , { root : __dirname});
+});
+
 app.get("/home", (req, res) => {
-    res.sendFile('web322-app/views/home.html');
+    res.sendFile('views/home.html' , { root : __dirname});
 });
 app.get("/about", (req, res) => {
-    res.sendFile('about.html');
+    res.sendFile('views/about.html' , { root : __dirname});
 });
 
 // setup http server to listen on HTTP_PORT
