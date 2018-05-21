@@ -6,11 +6,12 @@ app.use(express.static('public'));
 // Routes
 
 app.get("/", (req, res) => {
-    res.send("/views/home.html");
+    res.send("web322-app/views/home.html");
 });
 app.get("/about", (req, res) => {
-    res.sendFile("/views/about.html");
+    res.sendFile("web322-app/views/about.html");
 });
 
 // setup http server to listen on HTTP_PORT
 app.listen(HTTP_PORT);
+console.log("Express http server listening on " + HTTP_PORT);
