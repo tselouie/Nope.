@@ -9,7 +9,7 @@ app.get("/", (req, res) => {
     res.send("/views/home.html");
 });
 app.get("/about", (req, res) => {
-    res.send("/views/about.html");
+    res.sendFile("/views/about.html");
 });
 
 // setup http server to listen on HTTP_PORT
