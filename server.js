@@ -1,10 +1,11 @@
 var HTTP_PORT = process.env.PORT || 8080;
 var express = require("express");
-var emp = require('./data/employees');
-var dept = require('./data/departments');
-let managers = emp;
+var fs = require('fs');
+var emp = fs.readFileSync('./data/employees.json');
+var dept = fs.readFileSync('./data/departments.json');
+var empobj = JSON.parse(emp);
 
-//var dataservice = require("data-service.js");
+var dataservice = require("./data-service.js");
 var app = express();
 
 
@@ -22,32 +23,34 @@ app.get("/about", (req, res) => {
     res.sendFile('views/about.html', { root: __dirname });
 });
 app.get("/employees", (req, res) => {
-    res.json([emp]);
+    dataservice.getAllEmployees()
+    .then(data => {res.json(data);})
+    .catch(err => {res.json(err);})
+   
 });
 app.get("/managers", (req, res) => {
-    var num = 0;
+    dataservice.getManagers()
+    .then(data =>{res.json(data);})
+    .catch(err => {res.json(err);})
 
-    for (var i = 0; i < 281; i++) {
-        if (managers[i].isManager == false) {
-             console.log(managers[i]);
-            // console.log(num);
-            managers.slice(i);
-        }
-        else {
-            continue;
-        }
-    }
-
-
-    res.json([managers]);
 });
 app.get("/departments", (req, res) => {
-    res.json([dept]);
+    dataservice.getDepartments()
+    .then(data => {res.json(data);})
+    .catch(err => {res.json(err);})
 });
 
-//res.status(404).send("Page Not Found");
+
+app.use((req, res) => {
+    res.status(404).send("Page Not Found");
+});
+
 
 // setup http server to listen on HTTP_PORT
-app.listen(HTTP_PORT, function () {
-    console.log("Express http server listening on " + HTTP_PORT);
+dataservice.initialize().then(() => {
+    app.listen(HTTP_PORT, function () {
+        console.log("Express http server listening on " + HTTP_PORT);
+    })
+}).catch(() => {
+    console.log("No Data Found");
 });
