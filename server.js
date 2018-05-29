@@ -61,7 +61,7 @@ app.use((req, res) => {
 
 
 //use dataservice to initialize, if success;server will listen on HTTP_PORT
-dataservice.initialize().then(() => {
+dataService.initialize().then(() => {
     // setup http server to listen on HTTP_PORT
     app.listen(HTTP_PORT, function () {
         console.log("Express http server listening on " + HTTP_PORT);
