@@ -2,16 +2,14 @@
 var empData = require('./data/employees.json');
 var depData = require('./data/departments.json');
 var fs = require("fs");
-
-
 var employees = [];
 var departments = [];
 
-
+//module.exports enables access from other js file.
+//initialize renders the JSON files into their respective arrays if operations are a success
+//if error at any time reject will pass error message
 module.exports.initialize = function () {
-
     return new Promise(function (resolve, reject) {
-
 
         fs.readFile('./data/employees.json', (err, data) => {
             if (err) {
@@ -32,6 +30,7 @@ module.exports.initialize = function () {
     });
 };
 
+
 module.exports.getAllEmployees = function () {
     return new Promise(function (resolve, reject) {
 
@@ -43,7 +42,8 @@ module.exports.getAllEmployees = function () {
     });
 };
 
-
+//create new variable to hold employees whom's isManager value is true
+//if success, resolve will pass the information of managers array
 module.exports.getManagers = function () {
     return new Promise(function (resolve, reject) {
         var managers = [];
