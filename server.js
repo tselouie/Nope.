@@ -17,7 +17,7 @@ var emp = fs.readFileSync('./data/employees.json');
 var dept = fs.readFileSync('./data/departments.json');
 var empobj = JSON.parse(emp);
 
-var dataservice = require("./data-service.js");
+var dataService = require("./data-service.js");
 var app = express();
 
 
@@ -37,19 +37,19 @@ app.get("/about", (req, res) => {
 
 //
 app.get("/employees", (req, res) => {
-    dataservice.getAllEmployees()
+    dataService.getAllEmployees()
     .then(data => {res.json(data);})
     .catch(err => {res.json(err);})
 });
 
 app.get("/managers", (req, res) => {
-    dataservice.getManagers()
+    dataService.getManagers()
     .then(data =>{res.json(data);})
     .catch(err => {res.json(err);})
 });
 
 app.get("/departments", (req, res) => {
-    dataservice.getDepartments()
+    dataService.getDepartments()
     .then(data => {res.json(data);})
     .catch(err => {res.json(err);})
 });
