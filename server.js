@@ -129,14 +129,14 @@ app.get("/images", (req, res) => {
     res.json({ images: img });
 });
 
-// var images = fs.readdir('./public/images/uploaded', function (err, items) {
+var images = fs.readdir('./public/images/uploaded', function (err, items) {
 
-//     if(items.length > 0){
-//     for(var i = 0; i < items.length; i++) {
-//         img[i] = items[i];
-//     }
-// }
-// });
+    if(items.length > 0){
+    for(var i = 0; i < items.length; i++) {
+        img[i] = items[i];
+    }
+}
+});
 
 
 //if status becomes 404 message returns page not found.
