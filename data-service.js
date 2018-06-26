@@ -1,8 +1,8 @@
 
 var empData = require('./data/employees.json');
 var depData = require('./data/departments.json');
-var handleBars = require("handlebars");
-var fs = require("fs");
+var handleBars = require('handlebars');
+var fs = require('fs');
 var employees = [];
 var departments = [];
 
