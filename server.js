@@ -21,11 +21,7 @@ var dept = fs.readFileSync('./data/departments.json');
 var empobj = JSON.parse(emp);
 
 var img = [];
-var images = fs.readdir('./public/images/uploaded', function (err, items) {
-    for (var i = 0; i < items.length; i++) {
-        img[i] = items[i]
-    }
-});
+
 
 var dataService = require("./data-service.js");
 var app = express();
@@ -132,6 +128,15 @@ app.post("/images/add", upload.single("imageFile"), (req, res) => {
 app.get("/images", (req, res) => {
     res.json({ images: img });
 });
+
+// var images = fs.readdir('./public/images/uploaded', function (err, items) {
+
+//     if(items.length > 0){
+//     for(var i = 0; i < items.length; i++) {
+//         img[i] = items[i];
+//     }
+// }
+// });
 
 
 //if status becomes 404 message returns page not found.
