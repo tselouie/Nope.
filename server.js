@@ -29,7 +29,9 @@ var images = fs.readdir('./public/images/uploaded', function (err, items) {
 
 var dataService = require("./data-service.js");
 var app = express();
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 
 const storage = multer.diskStorage({
