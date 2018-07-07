@@ -13,6 +13,7 @@
 var HTTP_PORT = process.env.PORT || 8080;
 var bodyParser = require('body-parser');
 var express = require('express');
+var exphbs = require('express-handlebars');
 var fs = require('fs');
 var multer = require('multer');
 const path = require("path");
@@ -27,6 +28,9 @@ var dataService = require("./data-service.js");
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.engine('.hbs', exphbs({defaultLayout: 'main'}));
+app.set('view engine', '.hbs');
 
 
 
@@ -55,7 +59,7 @@ dataService.initialize().then(() => {
 //Get Routes
 
 app.get("/", (req, res) => {
-    res.sendFile('views/home.html', { root: __dirname });
+    res.render("home");
 });
 app.get("/home", (req, res) => {
     res.sendFile('views/home.html', { root: __dirname });
