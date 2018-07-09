@@ -29,7 +29,29 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.engine('.hbs', exphbs({defaultLayout: 'main'}));
+app.engine('.hbs', exphbs({extname: ".hbs", 
+                           defaultLayout: 'main',
+                            helpers:{
+                                navLink: function(url, options){
+                                    return '<li' +
+                                    ((url == app.locals.activeRoute) ? ' class="active" ' : '') + 
+                                    '><a href="' + url + '">' + options.fn(this) + '</a></li>';
+                                   },
+                                   equal: function (lvalue, rvalue, options) {
+                                    if (arguments.length < 3)
+                                    throw new Error("Handlebars Helper equal needs 2 parameters");
+                                    if (lvalue != rvalue) {
+                                    return options.inverse(this);
+                                    } else {
+                                    return options.fn(this);
+                                    }
+                                   }
+                                   
+                                   
+
+
+
+                            }}));
 app.set('view engine', '.hbs');
 
 
@@ -55,6 +77,11 @@ dataService.initialize().then(() => {
     console.log("No Data Found");
 });
 
+app.use(function(req,res,next){
+    let route = req.baseUrl + req.path;
+    app.locals.activeRoute = (route == "/") ? "/" : route.replace(/\/$/, "");
+    next();
+   });
 
 //Get Routes
 
@@ -62,16 +89,16 @@ app.get("/", (req, res) => {
     res.render("home");
 });
 app.get("/home", (req, res) => {
-    res.sendFile('views/home.html', { root: __dirname });
+    res.render("home");
 });
 app.get("/about", (req, res) => {
-    res.sendFile('views/about.html', { root: __dirname });
+    res.render("about");
 });
 app.get("/employees/add", (req, res) => {
-    res.sendFile('views/addEmployee.html', { root: __dirname });
+    res.render("addEmployee");
 });
 app.get("/images/add", (req, res) => {
-    res.sendFile('views/addImage.html', { root: __dirname });
+    res.render("addImage");
 });
 
 app.post("/employees/add", (req, res) => {
@@ -104,11 +131,6 @@ app.get("/employees", (req, res) => {
     }
 });
 
-app.get("/managers", (req, res) => {
-    dataService.getManagers()
-        .then(data => { res.json(data); })
-        .catch(err => { res.json(err); })
-});
 
 app.get("/departments", (req, res) => {
     dataService.getDepartments()
@@ -129,10 +151,6 @@ app.post("/images/add", upload.single("imageFile"), (req, res) => {
     res.redirect("/images");
 });
 
-app.get("/images", (req, res) => {
-    res.json({ images: img });
-});
-
 var images = fs.readdir('./public/images/uploaded', function (err, items) {
 
     if(items.length > 0){
@@ -141,6 +159,12 @@ var images = fs.readdir('./public/images/uploaded', function (err, items) {
     }
 }
 });
+
+app.get("/images", (req, res) => {
+    res.render('images', img);
+});
+
+
 
 
 //if status becomes 404 message returns page not found.
