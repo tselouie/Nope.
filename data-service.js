@@ -127,16 +127,15 @@ module.exports.getEmployeesByStatus = function (status) {
 module.exports.getEmployeesByDepartment = function (department) {
     return new Promise(function (resolve, reject) {
         var employeeListByDept = [];
-        if(department > 0 && department < 8){
-        for (var i = 0; i < employees.length; i++) {
+        if (department > 0 && department < 8) {
+            for (var i = 0; i < employees.length; i++) {
 
-            if (employees[i].department == department) {
-                employeeListByDept.push(employees[i]);
+                if (employees[i].department == department) {
+                    employeeListByDept.push(employees[i]);
+                }
             }
         }
-    }
         if (employeeListByDept.length > 0) {
-       //     console.log(department);
             resolve(employeeListByDept);
         } else {
             reject("no results returned");
@@ -146,7 +145,6 @@ module.exports.getEmployeesByDepartment = function (department) {
 module.exports.getEmployeesByManager = function (manager) {
     return new Promise(function (resolve, reject) {
         var employeeListByManager = [];
-        
 
         for (var i = 0; i < employees.length; i++) {
 
@@ -180,3 +178,16 @@ module.exports.getEmployeeByNum = function (num) {
         }
     });
 }
+
+module.exports.updateEmployee = function (employeeData) {
+    return new Promise(function (resolve, reject) {
+       
+        for (var i = 0; i < employees.length; i++) { 
+            if (employees[i].employeeNum == employeeData.employeeNum) {
+                employees[i] = employeeData;
+                resolve();
+            }
+        }
+      
+    });
+};
