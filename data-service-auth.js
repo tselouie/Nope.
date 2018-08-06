@@ -38,7 +38,7 @@ module.exports.registerUser = function (userData) {
                         reject("Error encrypting password");
                     } else {
                         userData.password = hash;
-                       userData.loginHistory.userAgent = navigator.userAgent;
+                      // userData.loginHistory.userAgent = navigator.userAgent;
                         let newUser = new User(userData);
 
                         newUser.save((err) => {
@@ -72,7 +72,7 @@ module.exports.checkUser = function (userData) {
 
                 } else {
                     console.log("this is user agent....: " + navigator.userAgent);
-                   users.loginHistory.userAgent = navigator.userAgent;
+                  // users.loginHistory.userAgent = navigator.userAgent;
                     
                     bcrypt.compare(userData.password, users[0].password).then((res) => {
                         if (res === true) {
