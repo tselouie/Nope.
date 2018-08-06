@@ -37,7 +37,7 @@ module.exports.registerUser = function (userData) {
                         reject("Error encrypting password");
                     } else {
                         userData.password = hash;
-                        userData.loginHistory.userAgent = navigator.userAgent;
+                       // userData.loginHistory.userAgent = navigator.userAgent;
                         let newUser = new User(userData);
 
                         newUser.save((err) => {
