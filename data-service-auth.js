@@ -64,6 +64,8 @@ module.exports.registerUser = function (userData) {
 
 module.exports.checkUser = function (userData) {
     return new Promise(function (resolve, reject) {
+       
+
         User.find({ user: userData.user })
             .exec()
             .then((users) => {
@@ -71,13 +73,13 @@ module.exports.checkUser = function (userData) {
                     reject(userData.userName + " not found");
 
                 } else {
-                    console.log("this is user agent....: " + navigator.userAgent);
-                  // users.loginHistory.userAgent = navigator.userAgent;
+                  // console.log("this is user agent....: " + userData.navigator.userAgent);
+                  // userData.loginHistory.userAgent = navigator.userAgent;
                     
                     bcrypt.compare(userData.password, users[0].password).then((res) => {
                         if (res === true) {
                             console.log("passwords are the same");
-                            let login = { dateTime: (new Date()).toString(), userAgent: userData.userAgent}
+                            let login = { dateTime: (new Date()).toString(), userAgent: userData.userAgent};
                             users[0].loginHistory.push(login);
 
                             User.update(
