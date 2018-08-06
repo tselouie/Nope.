@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 
+
 var userSchema = new Schema({
     userName: { type: String, unique: true },
     password: String,
@@ -37,7 +38,7 @@ module.exports.registerUser = function (userData) {
                         reject("Error encrypting password");
                     } else {
                         userData.password = hash;
-                       // userData.loginHistory.userAgent = navigator.userAgent;
+                       userData.loginHistory.userAgent = navigator.userAgent;
                         let newUser = new User(userData);
 
                         newUser.save((err) => {
@@ -70,8 +71,9 @@ module.exports.checkUser = function (userData) {
                     reject(userData.userName + " not found");
 
                 } else {
-                    users.loginHistory.userAgent = navigator.userAgent;
-                    console.log("this is user agent....: " + users.userAgent);
+                    console.log("this is user agent....: " + navigator.userAgent);
+                   users.loginHistory.userAgent = navigator.userAgent;
+                    
                     bcrypt.compare(userData.password, users[0].password).then((res) => {
                         if (res === true) {
                             console.log("passwords are the same");
