@@ -1,53 +1,36 @@
-const Sequelize = require('sequelize');
-var sequelize = new Sequelize('d2pvlelr39u7m1', 'ydtdgdqiufrcei', '8d24345b38d9c8c203467d7ad376883b969c8877b1270d6809a97b6602219742', {
-    host: 'ec2-50-19-86-139.compute-1.amazonaws.com',
-    dialect: 'postgres',
-    operatorsAliases: false,
-    port: 5432,
-    dialectOptions: {
-        ssl: true
-    }
+const mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+
+mongoose.connect("mongodb://lttse:web322a6@ds141621.mlab.com:41621/web322_a6", { useNewUrlParser: true });
+var boardGameSchema = new Schema({
+    Name: { type: String, unique: true },
+    Genre: String,
+    Players: Number,
+    Standalone: Boolean,
+    Manufacturer: String
 });
 
-var Employee = sequelize.define('Employee', {
-    employeeNum: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    firstName: Sequelize.STRING,
-    lastName: Sequelize.STRING,
-    email: Sequelize.STRING,
-    SSN: Sequelize.STRING,
-    addressStreet: Sequelize.STRING,
-    addresCity: Sequelize.STRING,
-    addressState: Sequelize.STRING,
-    addressPostal: Sequelize.STRING,
-    maritalStatus: Sequelize.STRING,
-    isManager: Sequelize.BOOLEAN,
-    employeeManagerNum: Sequelize.INTEGER,
-    status: Sequelize.STRING,
-    department: Sequelize.INTEGER,
-    hireDate: Sequelize.STRING
-});
+var Bgames = mongoose.model("boardgames", boardGameSchema);
 
-var Department = sequelize.define('Department', {
-    departmentId: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    departmentName: Sequelize.STRING
-});
+module.exports.getAllBoardGames = function () {
 
-// var empData = require('./data/employees.json');
-// var depData = require('./data/departments.json');
-// var handleBars = require('handlebars');
-// var fs = require('fs');
-// var employees = [];
-// var departments = [];
-//var compiledTemplate = handleBars.compile(employees);
+    return new Promise(function (resolve, reject) {
 
+        Bgames.find({})
+            .then(function (data) {
+                if (data.length > 0) {
+                    resolve(data);
+
+                } else {
+
+                    reject("no results returned");
+                }
+            }).catch(() => {
+                reject("no results return");
+            });
+    })
+};
 
 
 //module.exports enables access from other js file.
@@ -62,28 +45,8 @@ module.exports.initialize = function () {
             }).catch(function (err) {
                 reject('unable to sync the database', err);
             });
-
-
-        // fs.readFile('./data/employees.json', (err, data) => {
-        //     if (err) {
-        //         reject("unable to read file");
-
-        //     } else {
-        //         employees = JSON.parse(data);
-        //         fs.readFile('./data/departments.json', (err, data) => {
-        //             if (err) {
-        //                 reject("unable to read file");
-        //             } else {
-        //                 departments = JSON.parse(data);
-        //                 resolve("files read successfully.");
-        //             }
-        //         });
-        //     }
-        // });
-
     });
 };
-
 
 module.exports.getAllEmployees = function () {
     return new Promise(function (resolve, reject) {
@@ -101,11 +64,7 @@ module.exports.getAllEmployees = function () {
 };
 
 
-// if (employees.length > 0) {
-//     resolve(employees);
-// } else {
-//     reject("no results returned");
-// }
+
 
 
 
@@ -126,35 +85,13 @@ module.exports.addEmployee = function (employeeData) {
             });
     });
 }
-// if (employeeData.isManager == null) {
-//     employeeData.isManager = false;
-// }
-// employeeData.employeeNum = employees.length + 1;
-
-// if (employeeData.employeeNum) {
-//     resolve(employees.push(employeeData));
-// } else {
-//     reject("unable to create employee");
-// }
 
 
 //create new variable to hold employees whom's isManager value is true
 //if success, resolve will pass the information of managers array
 module.exports.getManagers = function () {
     return new Promise(function (resolve, reject) {
-        // var managers = [];
-        // if (employees.length > 0) {
-        //     for (var i = 0; i < employees.length; i++) {
-        //         if (employees[i].isManager) {
-        //             managers.push(employees[i]);
-        //         }
-        //     }
-        // }
-        // if (managers.length != 0) {
-        //     resolve(managers);
-        // } else {
-        //     reject("no results returned");
-        // }
+
         Employee.findAll({ where: { isManager: true } })
             .then(function (data) {
 
@@ -180,12 +117,6 @@ module.exports.getDepartments = function () {
     })
 };
 
-// if (departments.length > 0) {
-
-//     resolve(departments);
-// } else {
-//     reject("no results returned");
-// }
 
 
 module.exports.getEmployeesByStatus = function (status) {
@@ -200,30 +131,7 @@ module.exports.getEmployeesByStatus = function (status) {
             });
     });
 };
-// var employeeListByStatus = [];
 
-// if (status == "Full Time") {
-//     for (var i = 0; i < employees.length; i++) {
-
-//         if (employees[i].status == "Full Time") {
-//             employeeListByStatus.push(employees[i]);
-//         }
-//     }
-// } else {
-//     for (var i = 0; i < employees.length; i++) {
-
-//         if (employees[i].status == "Part Time") {
-//             employeeListByStatus.push(employees[i]);
-//         }
-//     }
-// }
-
-// if (employeeListByStatus.length > 0) {
-
-//     resolve(employeeListByStatus);
-// } else {
-//     reject("no results returned");
-// }
 
 module.exports.getEmployeesByDepartment = function (department) {
     return new Promise(function (resolve, reject) {
@@ -237,20 +145,7 @@ module.exports.getEmployeesByDepartment = function (department) {
             });
     });
 };
-// var employeeListByDept = [];
-// if (department > 0 && department < 8) {
-//     for (var i = 0; i < employees.length; i++) {
 
-//         if (employees[i].department == department) {
-//             employeeListByDept.push(employees[i]);
-//         }
-//     }
-// }
-// if (employeeListByDept.length > 0) {
-//     resolve(employeeListByDept);
-// } else {
-//     reject("no results returned");
-// }
 
 module.exports.getEmployeesByManager = function (manager) {
     return new Promise(function (resolve, reject) {
@@ -265,20 +160,6 @@ module.exports.getEmployeesByManager = function (manager) {
             });
     });
 };
-// var employeeListByManager = [];
-
-// for (var i = 0; i < employees.length; i++) {
-
-//     if (employees[i].employeeManagerNum == manager) {
-//         employeeListByManager.push(employees[i]);
-//     }
-// }
-// if (employeeListByManager.length > 0) {
-
-//     resolve(employeeListByManager);
-// } else {
-//     reject("no results returned");
-// }
 
 module.exports.getEmployeeByNum = function (num) {
     return new Promise(function (resolve, reject) {
@@ -295,20 +176,7 @@ module.exports.getEmployeeByNum = function (num) {
     });
 
 }
-// var employee = [];
 
-// for (var i = 0; i < employees.length; i++) {
-
-//     if (employees[i].employeeNum == num) {
-//         employee[0] = employees[i];
-//     }
-// }
-// if (employee.length > 0) {
-
-//     resolve(employee);
-// } else {
-//     reject("no results returned");
-// }
 
 module.exports.updateEmployee = function (employeeData) {
     return new Promise(function (resolve, reject) {
@@ -329,12 +197,7 @@ module.exports.updateEmployee = function (employeeData) {
             });
     });
 }
-// for (var i = 0; i < employees.length; i++) { 
-//     if (employees[i].employeeNum == employeeData.employeeNum) {
-//         employees[i] = employeeData;
-//         resolve();
-//     }
-// }
+
 
 //dataService Department Fxn upgrades
 module.exports.addDepartment = function (departmentData) {
@@ -379,15 +242,15 @@ module.exports.getDepartmentById = function (id) {
     return new Promise(function (resolve, reject) {
         Department.findAll({
             where: { departmentId: id }
-        })  .then(function (data) {
-            if(data.length > 0){
+        }).then(function (data) {
+            if (data.length > 0) {
                 resolve(data[0]);
-            }          
+            }
         })
-        .catch(function (err) {
-            reject("no results returned");
-        });
-            
+            .catch(function (err) {
+                reject("no results returned");
+            });
+
     });
 }
 
@@ -398,12 +261,12 @@ module.exports.deleteEmployeeByNum = function (num) {
         Employee.destroy({
             where: { employeeNum: num }
         }).then(function (data) {
-            if(data.length > 0){
+            if (data.length > 0) {
                 resolve(data[0]);
-            }          
+            }
         })
-        .catch(function (err) {
-            reject("Unable to remove Employee #" + num);
-        });
+            .catch(function (err) {
+                reject("Unable to remove Employee #" + num);
+            });
     });
 };

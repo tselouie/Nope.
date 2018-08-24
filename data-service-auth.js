@@ -12,20 +12,29 @@ var userSchema = new Schema({
 });
 
 let User;
+var Bg;
 
+//, server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }keep it working options
 
 module.exports.initialize = function () {
     return new Promise(function (resolve, reject) {
-        let db = mongoose.createConnection("mongodb://lttse:web322a6@ds141621.mlab.com:41621/web322_a6", { useNewUrlParser: true });
+        let db = mongoose.createConnection("mongodb://lttse:web322a6@ds141621.mlab.com:41621/web322_a6", 
+        { useNewUrlParser: true }); 
         db.on('error', (err) => {
             reject(err); // reject the promise with the provided error
         });
         db.once('open', () => {
             User = db.model("users", userSchema);
+            // Bg = db.model("boardgames", boardGameSchema);
             resolve();
         });
     });
 };
+
+
+
+
+
 
 module.exports.registerUser = function (userData) {
     return new Promise(function (resolve, reject) {
@@ -62,6 +71,8 @@ module.exports.registerUser = function (userData) {
 };
 
 
+
+
 module.exports.checkUser = function (userData) {
     return new Promise(function (resolve, reject) {
        
@@ -83,7 +94,7 @@ module.exports.checkUser = function (userData) {
                             users[0].loginHistory.push(login);
 
                             User.update(
-                                { userName: users[0].userName },
+                                { userName: users[0] },
                                 { $set: { loginHistory: users[0].loginHistory } }
                             ).exec()
                                 .then()

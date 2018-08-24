@@ -1,74 +1,182 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <!-- Latest compiled and minified Bootstrap 3.3.7 CSS -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      <title>Home</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <span class="navbar-brand" href="#">WEB322 - Louie Tse</span>
-        </div>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="/css/site.css" media="screen">
+  <!-- Latest compiled and minified Bootstrap 4.1.3 CSS -->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+  <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+  <title>Home</title>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#" style="font-family: 'Shrikhand',cursive;">Nope.</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
     
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          {{#if session.user}}
-          <form class="navbar-form navbar-right">
+      {{#navLink "/"}}Home<span class="sr-only">(current)</span>{{/navLink}} 
+      {{#navLink "/about"}}About Me{{/navLink}}
+      {{#navLink "/boardgames"}}Board Games{{/navLink}}
+  
+
+    </ul>
+    <span class="navbar-text">
+     {{#if session.user}}
+
+   {{!-- <div class="navbar-collapse collapse w-100 order-3 dual-collapse2"> --}}
  <div class="dropdown">
- <button class="btn btn-primary dropdown-toggle" type="button" id="userMenu" data-toggle="dropdown">
- <span class="glyphicon glyphiconuser"></span>&nbsp;&nbsp;{{session.user.userName}}&nbsp;&nbsp;<span
-class="caret"></span>
- </button>
- <ul class="dropdown-menu" aria-labelledby="userMenu">
- <li><a href="/userHistory">User History</a></li>
- <li><a href="/logout">Log Out</a></li>
- </ul>
- </div>
-</form>
-  {{else}}
-  <form class="navbar-form navbar-right">
- <a href="/register" class="btn btn-success"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Register</a>
- <a href="/login" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span>&nbsp;&nbsp;Log
-In</a>
-</form>
-{{/if}}
-          <ul class="nav navbar-nav">
-            {{#navLink "/"}}Home{{/navLink}}
-            {{#navLink "/about"}}About{{/navLink}}
-          
-            
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            {{#navLink "/images"}}Images{{/navLink}}
-            {{#navLink "/employees"}}Employees{{/navLink}}
-            {{#navLink "/departments"}}Departments{{/navLink}}
-          </ul>
+     <button class="btn btn-primary dropdown-toggle" type="button" id="userMenu" data-toggle="dropdown">
+              <span class="glyphicon glyphiconuser"></span>&nbsp;&nbsp;{{session.user.userName}}&nbsp;&nbsp;
+              <span class="caret"></span>
+            </button>
 
         
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container">
-      {{{body}}}
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+           
+                <a class="dropdown-item" href="/userHistory" style="color:black;">User History</a>          
+               <a class="dropdown-item" href="/logout" style="color:black;">Log Out</a>
+            
+        </div>
+       
     </div>
+    {{!-- </div> --}}
 
-    <!-- Latest compiled and minified jQuery 3.2.1 JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
+{{else}}
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a href="/register" class="btn btn-success">
+            <span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;Register</a>
+            </li>
+            <li class="nav-item">
+                 <a href="/login" class="btn btn-primary">
+            <span class="glyphicon glyphicon-chevron-right"></span>&nbsp;&nbsp;Log In
+          </a>
+            </li>
+        </ul>
+    </div>
+    {{/if}}
+    </span>
+  </div>
+</nav>
+   
+        
+      {{!-- <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="font-family: 'Baloo Paaji', cursive;font-size:22px;">
+          {{#navLink "/"}}Home{{/navLink}}  {{#navLink "/boardgames"}}Board Games{{/navLink}}
 
-    <!-- Latest compiled and minified Bootstrap 3.3.7 JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  </body>
+
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right" style="font-family: 'Baloo Paaji', cursive;font-size:22px;">
+          {{#navLink "/images"}}Images{{/navLink}} {{#navLink "/players"}}Players{{/navLink}} {{#navLink "/departments"}}Departments{{/navLink}}
+        </ul>
+
+
+      </div> --}}
+
+   
+    
+
+              <!-- Collect the nav links, forms, and other content for toggling -->
+      {{!-- <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="font-family: 'Baloo Paaji', cursive;font-size:22px;">
+          {{#navLink "/"}}Home{{/navLink}} {{#navLink "/about"}}About Me{{/navLink}} {{#navLink "/boardgames"}}Board Games{{/navLink}}
+
+
+
+        </ul>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="font-family: 'Baloo Paaji', cursive;font-size:22px;">
+          {{#navLink "/images"}}Images{{/navLink}} {{#navLink "/players"}}Players{{/navLink}} {{#navLink "/departments"}}Departments{{/navLink}}
+        </ul>
+
+
+      </div> --}}
+    
+       
+  
+
+    
+
+       {{!-- <a class="navbar-brand" href="/">
+        <img src="/images/tempdicepic.jpg" class="navbar-brand" alt="Responsive image" style="width:50px;height:50px;bottom-margin:6px;">
+        </a> --}}
+
+
+
+
+  {{!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark " style="background-color: black;">
+     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+    
+    <div class="container-fluid">
+     
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+      
+</div>
+     
+      
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      
+        <ul class="nav navbar-nav" style="font-family: 'Baloo Paaji', cursive;font-size:22px;">
+          {{#navLink "/"}}Home{{/navLink}} {{#navLink "/about"}}About Me{{/navLink}} {{#navLink "/boardgames"}}Board Games{{/navLink}}
+
+
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right" style="font-family: 'Baloo Paaji', cursive;font-size:22px;">
+          {{#navLink "/images"}}Images{{/navLink}} {{#navLink "/players"}}Players{{/navLink}} {{#navLink "/departments"}}Departments{{/navLink}}
+        </ul>
+
+
+      </div>
+      <!-- /.navbar-collapse -->
+
+      <!-- /.container-fluid -->
+  </nav> --}}
+
+  <div class="container" >
+
+    {{{body}}}
+
+  </div>
+
+
+
+</body>
+
+<footer style="color:white;">
+  <nav class="navbar fixed-bottom" style="background-color: black;">
+    © 2018 Louie Tse | <a href="#">Contact Us</a>
+    </nav>
+ 
+</footer>
+
+
+
+
 </html>

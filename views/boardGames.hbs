@@ -1,0 +1,37 @@
+
+
+    
+      <div class="title">
+       <h1 style="font-family: 'Baloo Paaji', cursive; font-size:40px;align:'center';">Board Games List</h1>   
+      </div>
+
+
+<div class="table-responsive">
+ <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Genre </th>
+                        <th scope="col">Players</th>
+                        <th scope="col">Standalone</th>
+                        <th scope="col">Manufacturer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each boardgames}} 
+                    <tr class="table-dark">
+                        <td>{{Name}}</td>
+                        <td>{{Genre}}</td>
+                        <td>{{Players}}</td>
+                        <td>{{Standalone}}</td>
+                        <td>{{Manufacturer}}</td>
+                       
+                    </tr> 
+                    {{/each}}    
+                </tbody>
+            </table>
+
+
+ </div>
+  
+  

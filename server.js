@@ -41,9 +41,12 @@ app.engine('.hbs', exphbs({
     defaultLayout: 'main',
     helpers: {
         navLink: function (url, options) {
-            return '<li' +
+            console.log("active:", app.locals.activeRoute);
+            console.log("url:", url);
+            return '<li class="nav-item"' +
                 ((url == app.locals.activeRoute) ? ' class="active" ' : '') +
-                '><a href="' + url + '">' + options.fn(this) + '</a></li>';
+                '><a class="nav-link" href="' + url + '">' + options.fn(this) + '</a></li>';
+                
         },
         equal: function (lvalue, rvalue, options) {
             if (arguments.length < 3)
@@ -98,8 +101,8 @@ function ensureLogin(req, res, next) {
 }
 
 //use dataservice to initialize, if success;server will listen on HTTP_PORT
-dataService.initialize()
-    .then(dataServiceAuth.initialize())
+//dataService.initialize().then()
+    dataServiceAuth.initialize()
     .then(() => {
         // setup http server to listen on HTTP_PORT
         app.listen(HTTP_PORT, function () {
@@ -126,6 +129,11 @@ app.get("/home", (req, res) => {
 app.get("/about", (req, res) => {
     res.render("about");
 });
+app.get("/boardgames", (req, res) => {
+    dataService.getAllBoardGames()
+    .then(data => { res.render("boardgames", { boardgames: data }); })
+    .catch(err => { res.render("boardgames", { boardgames: [] }); })
+});
 
 app.get("/login", (req, res) => {
     res.render("login");
@@ -142,7 +150,7 @@ app.post("/login", (req, res) => {
                 
             }
             
-            res.redirect('/employees');
+            res.redirect('/players');
         })
         .catch((err) => {
             res.render("login", { errorMessage: err, userName: req.body.userName });
@@ -171,16 +179,16 @@ app.get("/logout", function(req, res) {
     res.redirect("/");
   });
 
-app.get("/employees/add", ensureLogin, (req, res) => {
+app.get("/players/add", ensureLogin, (req, res) => {
     dataService.getDepartments()
         .then(data => { res.render("addEmployee", { departments: data }); })
         .catch(err => { res.render("addEmployee", { departments: [] }); })
 
 });
 
-app.post("/employees/add", ensureLogin, (req, res) => {
+app.post("/players/add", ensureLogin, (req, res) => {
     dataService.addEmployee(req.body);
-    res.redirect('/employees');
+    res.redirect('/players');
 
 });
 app.get("/departments/add", ensureLogin, (req, res) => {
@@ -208,26 +216,26 @@ app.post("/department/update", ensureLogin, (req, res) => {
         });
 });
 
-app.get("/employees", ensureLogin, (req, res) => {
+app.get("/players", ensureLogin, (req, res) => {
 
     if (req.query.status) {
         dataService.getEmployeesByStatus(req.query.status)
-            .then(data => { res.render("employees", { employees: data }); })
-            .catch(err => { res.render("employees", { employees: {}, message: err }); })
+            .then(data => { res.render("players", { employees: data }); })
+            .catch(err => { res.render("players", { employees: {}, message: err }); })
     } else if (req.query.department) {
         dataService.getEmployeesByDepartment(req.query.department)
-            .then(data => { res.render("employees", { employees: data }); })
-            .catch(err => { res.render("employees", { employees: {}, message: err }); })
+            .then(data => { res.render("players", { employees: data }); })
+            .catch(err => { res.render("players", { employees: {}, message: err }); })
     }
     else if (req.query.manager) {
         dataService.getEmployeesByManager(req.query.manager)
-            .then(data => { res.render("employees", { employees: data }); })
-            .catch(err => { res.render("employees", { employees: {}, message: err }); })
+            .then(data => { res.render("players", { employees: data }); })
+            .catch(err => { res.render("players", { employees: {}, message: err }); })
     }
     else {
         dataService.getAllEmployees()
-            .then(data => { res.render("employees", { employees: data }); })
-            .catch(err => { res.render("employees", { employees: {}, message: err }); })
+            .then(data => { res.render("players", { employees: data }); })
+            .catch(err => { res.render("players", { employees: {}, message: err }); })
     }
 });
 
@@ -279,7 +287,7 @@ app.post("/employee/update", ensureLogin, (req, res) => {
     console.log(req.body);
     dataService.updateEmployee(req.body)
         .then(() => {
-            res.redirect("/employees");
+            res.redirect("/players");
         });
     // .catch((err) => { res.send({err}); });
 
@@ -295,8 +303,6 @@ app.get("/images/add", ensureLogin, (req, res) => {
 app.post("/images/add", ensureLogin, upload.single("imageFile"), async (req, res) => {
     res.redirect("/images");
 });
-
-
 
 app.get("/images", ensureLogin, (req, res) => {
     var images = fs.readdir('./public/images/uploaded', function (err, items) {
