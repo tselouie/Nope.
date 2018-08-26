@@ -49,13 +49,22 @@ background-repeat:space;
     
  }
 
- .headshots img{
+ #headshots img{
     border-radius:12px;
     margin:5px;
     margin-right:0;
    height:200px;
    width:200px;
 
+
  }
+
+ #bio{
+   background-color:black;
+  background: linear-gradient(to bottom right,transparent, black);
+
+ }
+
+
 
 
