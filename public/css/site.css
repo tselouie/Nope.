@@ -13,7 +13,9 @@ background-repeat:space;
 
 
 .bgimage {
-    background: url("../images/pic.jpg");
+    /* background: url("../images/pic.jpg"); */
+    background-color:mintcream;
+
     background-size:cover; 
     top:5%;
     left:0;
@@ -50,21 +52,28 @@ background-repeat:space;
  }
 
  #headshots img{
+   padding-top:20px;
+   padding-bottom: -20px;
     border-radius:12px;
     margin:5px;
     margin-right:0;
-   height:200px;
-   width:200px;
+    margin-bottom:-5px;
+   height:215px;;
+   width:215px;
+ 
 
 
  }
 
  #bio{
-   background-color:black;
-  background: linear-gradient(to bottom right,transparent, black);
+  background-image: -webkit-gradient(linear, left top, right bottom, from(rgb(255, 255, 255,.05)), to(rgba(0, 0, 0, 1)));
+  position: absolute;
+  top:0;
+  padding-top:30px;
+  width:100%;
+  z-index: 1;
 
  }
-
 
 
 

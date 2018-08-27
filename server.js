@@ -20,6 +20,7 @@ var multer = require('multer');
 const path = require("path");
 
 
+
 var emp = fs.readFileSync('./data/employees.json');
 var dept = fs.readFileSync('./data/departments.json');
 var empobj = JSON.parse(emp);

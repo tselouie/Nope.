@@ -13,6 +13,8 @@ var boardGameSchema = new Schema({
 
 var Bgames = mongoose.model("boardgames", boardGameSchema);
 
+
+
 module.exports.getAllBoardGames = function () {
 
     return new Promise(function (resolve, reject) {
